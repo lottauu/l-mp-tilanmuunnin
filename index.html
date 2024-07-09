@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=">
+    <title>Lämpötilamuunnin</title>
+    <script>
+        function muunnaLämpötila(event) {
+            event.preventDefault();
+
+            const lämpötilaSelect = document.getElementById('lämpötilat');
+            const muunninInput = document.getElementById('muunnin');
+            const tulosElement = document.getElementById('tulos');
+            const muunninValue = muunninInput.value.trim();
+
+            if (muunninValue === "") {
+                alert("Anna lämpötila.");
+                return;
+            }
+
+            const lämpötila = parseFloat(muunninValue);
+
+            if (isNaN(lämpötila)) {
+                alert("Ei kelpaa.");
+                return;
+            }
+
+            let tulos;
+
+            if (lämpötilaSelect.value === "CF") {
+                tulos = (lämpötila * 9/5) + 32;
+                tulosElement.textContent = `${lämpötila} Celsiusta on ${tulos.toFixed(2)} Fahrenheittia`;
+            } else if (lämpötilaSelect.value === "FC") {
+                tulos = (lämpötila - 32) * 5/9;
+                tulosElement.textContent = `${lämpötila} Fahrenheittia on ${tulos.toFixed(2)} Celsiusta`;
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Lämpötilamuunnin</h1>
+    <form onsubmit="muunnaLämpötila(event)">
+        <label for="lämpötilat">Valitse muuntokurssi</label>
+        <select name="yksiköt" id="lämpötilat">
+        <option value="CF" id="fahrenheit">Celsius -> Fahrenheit</option>
+        <option value="FC" id="celsius">Fahrenheit -> Celsius</option>
+        
+        </select>
+        <br>
+        <input type="text" id="muunnin" name="muunnin">
+        <button type="submit">Muunna</button>
+        <br>
+        <p id="tulos"></p>
+    </form>
+
+</body>
+</html>
+
